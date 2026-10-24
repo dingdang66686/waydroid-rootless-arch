@@ -7,7 +7,8 @@ name.
 
 ## Install
 
-Add to `/etc/pacman.conf`:
+Add to `/etc/pacman.conf`, **before** `[core]`/`[extra]` (repository order
+decides which `waydroid` package wins):
 
 ```ini
 [waydroid-rootless]
