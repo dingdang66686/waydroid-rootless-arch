@@ -1,6 +1,9 @@
 # waydroid-rootless Arch repository
 
-Pacman repository for the rootless Waydroid backend fork.
+Pacman repository for a Waydroid build with the rootless podman backend.
+
+The package is named `waydroid` and replaces the distro package of the same
+name.
 
 ## Install
 
@@ -15,21 +18,17 @@ SigLevel = Optional TrustAll
 Then:
 
 ```sh
+podman pull ghcr.io/dingdang66686/waydroid-rootless-image:13
 sudo pacman -Sy
-sudo pacman -S waydroid-rootless
-systemctl --user enable --now waydroid-rootless.service
+sudo pacman -S waydroid
+systemctl --user enable --now waydroid.service
 ```
 
-The package:
+The package replaces the distro `waydroid` package, installs `/usr/bin/waydroid`
+with the rootless launcher, and disables the rootful
+`waydroid-container.service`.
 
-- installs `/usr/bin/waydroid-rootless` and a `/usr/local/bin/waydroid` launcher
-  (root still uses the distro binary);
-- installs the user unit `waydroid-rootless.service`;
-- disables the rootful `waydroid-container.service`.
-
-The base image is `ghcr.io/dingdang66686/waydroid-rootless-image:13`, pulled by
-the runtime if needed.  Local file-tree overlays are supported in
-`~/.local/state/waydroid/overlay`.
+Local overlays are supported in `~/.local/state/waydroid/overlay`.
 
 ## Build locally
 

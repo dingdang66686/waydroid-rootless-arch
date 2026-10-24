@@ -1,10 +1,11 @@
 #!/bin/sh
-# Rootless Waydroid launcher.  Root keeps using the distro package.
+# Rootless Waydroid launcher.
 if [ "$(id -u)" -eq 0 ]; then
-    exec /usr/bin/waydroid "$@"
+    echo "waydroid rootless backend must run as the desktop user" >&2
+    exit 1
 fi
 export WAYDROID_BACKEND=podman
 export WAYDROID_WORK="${WAYDROID_WORK:-${XDG_STATE_HOME:-$HOME/.local/state}/waydroid}"
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 export DBUS_SESSION_BUS_ADDRESS="${DBUS_SESSION_BUS_ADDRESS:-unix:path=$XDG_RUNTIME_DIR/bus}"
-exec python3 /usr/lib/waydroid-rootless/waydroid.py "$@"
+exec python3 /usr/lib/waydroid/waydroid.py "$@"
