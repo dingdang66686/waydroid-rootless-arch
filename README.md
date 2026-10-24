@@ -13,7 +13,14 @@ decides which `waydroid` package wins):
 ```ini
 [waydroid-rootless]
 Server = https://dingdang66686.github.io/waydroid-rootless-arch/$arch
-SigLevel = Optional TrustAll
+SigLevel = Required DatabaseRequired
+```
+
+Import and locally trust the repository key:
+
+```sh
+sudo pacman-key --add https://dingdang66686.github.io/waydroid-rootless-arch/x86_64/waydroid-rootless.asc
+sudo pacman-key --lsign-key B5B9D60481516AFE4E2DC8931F298A3142A4810C
 ```
 
 Then:
@@ -40,4 +47,5 @@ makepkg -si
 ## Notes
 
 - Requires a rootless podman setup and at least 131072 sub-UID/GID range.
-- The repository is unsigned; `SigLevel = Optional TrustAll` is required.
+- The repository and packages are signed by key
+  `B5B9D60481516AFE4E2DC8931F298A3142A4810C`.
