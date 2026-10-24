@@ -1,7 +1,7 @@
 # Maintainer: dingdang66686
 pkgname=waydroid
 pkgver=1.6.3
-pkgrel=2
+pkgrel=3
 pkgdesc="Rootless podman backend for Waydroid"
 arch=('x86_64')
 url="https://github.com/dingdang66686/waydroid-rootless"
@@ -12,9 +12,9 @@ provides=('waydroid-rootless')
 conflicts=('waydroid-rootless')
 replaces=('waydroid-rootless')
 install="$pkgname.install"
-_commit=037a76fa1d5d6fe7f9accc362e4c6decef8e2dd3
+_commit=a27084d8c244079ffa64d6fdf1b75ff6b43af744
 source=("$pkgname-$pkgver.tar.gz::https://github.com/dingdang66686/waydroid-rootless/archive/$_commit.tar.gz")
-sha256sums=('27ddabf619081de64cf5d28d8326b2268de1f5dbfeb3c59ae9d0d9d13080b9d9')
+sha256sums=('7da1d75410820b9bf1283fdd63ccc8ffc08592afb9739ec7199933775bc1a776')
 
 package() {
   local src="$srcdir/waydroid-rootless-$_commit"
