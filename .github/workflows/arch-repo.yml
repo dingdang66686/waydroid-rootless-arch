@@ -1,0 +1,48 @@
+name: arch-repo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:base-devel
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build package
+        run: |
+          set -eux
+          pacman -Syu --noconfirm --needed git sudo nodejs
+          useradd -m builder || true
+          echo 'builder ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/builder
+          chown -R builder:builder "$GITHUB_WORKSPACE"
+          su builder -c "cd '$GITHUB_WORKSPACE' && makepkg -s --noconfirm"
+
+      - name: Build pacman repository
+        run: |
+          set -eux
+          mkdir -p public/x86_64
+          cp ./*.pkg.tar.zst public/x86_64/
+          repo-add public/x86_64/waydroid-rootless.db.tar.gz public/x86_64/*.pkg.tar.zst
+          ls -l public/x86_64
+
+      - name: Publish gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -eux
+          cd public
+          git init -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Update pacman repository"
+          git push --force \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            gh-pages

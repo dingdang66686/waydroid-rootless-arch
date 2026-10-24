@@ -1,0 +1,17 @@
+post_install() {
+    systemctl disable --now waydroid-container.service >/dev/null 2>&1 || true
+    echo "Enable the rootless user service:"
+    echo "  systemctl --user enable --now waydroid-rootless.service"
+    echo "Pull the image if needed:"
+    echo "  podman pull ghcr.io/dingdang66686/waydroid-rootless-image:13"
+}
+
+post_upgrade() {
+    post_install
+}
+
+post_remove() {
+    systemctl enable --now waydroid-container.service >/dev/null 2>&1 || true
+    echo "The rootless user service may still be enabled; disable it with:"
+    echo "  systemctl --user disable --now waydroid-rootless.service"
+}

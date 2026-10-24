@@ -1,0 +1,16 @@
+pkgbase = waydroid-rootless
+	pkgdesc = Rootless podman backend for Waydroid
+	pkgver = 1.6.3
+	pkgrel = 1
+	url = https://github.com/dingdang66686/waydroid-rootless
+	install = waydroid-rootless.install
+	arch = x86_64
+	license = GPL-3.0-only
+	depends = waydroid
+	depends = podman
+	depends = crun
+	depends = passt
+	source = waydroid-rootless-1.6.3.tar.gz::https://github.com/dingdang66686/waydroid-rootless/archive/2b2efe5dc0a0ea40ba033f4635a985d4d8a24189.tar.gz
+	sha256sums = 67a67999db8129f73d0afe2cbe0cb06b028fc8c8c93f4bc538daa8fc6331a7bc
+
+pkgname = waydroid-rootless
