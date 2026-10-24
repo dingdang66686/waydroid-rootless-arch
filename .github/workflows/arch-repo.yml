@@ -59,6 +59,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -eux
+          unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
+          chown -R root:root public
           cd public
           git init -b gh-pages
           git config user.name "github-actions[bot]"
